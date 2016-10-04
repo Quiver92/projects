@@ -28,11 +28,67 @@ case "$answer" in
 #Setup skype
 2) sudo apt-get install -f && sudo apt-get install sni-qt:i386 libdbusmenu-qt2:i386 libqt4-dbus:i386 libxss1:i386 && sudo apt-get update && sudo apt-get install libgtk2.0-0:i386 gtk2-engines:i386 libgconf-2-4:i386 && sudo apt-get install -f && sudo add-apt-repository "deb http://archive.canonical.com/ $(lsb_release -sc) partner" && sudo apt-get update && sudo apt-get install skype ;;
 
-##Установка Chameleon
-3) sudo chmod 775 /etc/apt/sources.list  && sudo echo "deb http://repos.chmsoft.com.ua/ xenial-evolution-2.5 non-free">>/etc/apt/sources.list && sudo apt-key adv --recv-keys --keyserver keys.gnupg.net 1FB50E9B838F7C88 && sudo apt-get install -y chameleon-client chameleon-client-database chameleon-spring install chameleon-gui-plugin-all ;;
+##Installation of Chameleon
 
+3) ##Checking key and adding it
+ APTKEY=$(3>&1 apt-key list>&3 |  awk '{ print $2 }' | grep 1024D/838F7C88)
+ if [ $APTKEY -eq 0 ]
+   then
+     apt-key adv --recv-keys --keyserver keys.gnupg.net 1FB50E9B838F7C88
+   else
+     echo "You already add key"
+ fi
+ ##The code name of the distribution, and adds to the repository /etc/apt/souces.list
+ if [ 3>&1 dpkg -s python-software-properties software-properties-common>&3 | grep "Status: install ok installed" -eq 0 ]
+   then
+    sudo apt-get install python-software-properties software-properties-common
+   else
+    echo "You already install python-software-properties and software-properties-common"
+ fi
+ DISTR_CODENAME=$(awk -F "=" '{ print $2 }' /etc/lsb-release | sed -n  '3p')
+ sudo add-apt-repository "deb http://repos.chmsoft.com.ua/ "$DISTR_CODENAME"-evolution-2.5 non-free"
+sudo apt-get update
+
+PACKAGES=$(whiptail --title "Software Selection" --checklist \
+"Choose packets to install:" 20 78 6 \
+"chameleon-spring" "                                 "  ON \
+"chameleon-fruti" "                                 " OFF \
+"chameleon-server" "                                 " OFF 3>&1 1>&2 2>&3) 
+exitstatus=$?
+if [ $exitstatus = 0 ]; then
+  echo "You choose:" $PACKAGES
+ else
+  echo "You choose cancel."
+fi
+##Checking key and adding it
+##APTKEY=$(3>&1 apt-key list>&3 |  awk '{ print $2 }' | grep 1024D/838F7C88)
+##if [ $APTKEY -eq 0 ]
+  ##then
+    ##apt-key adv --recv-keys --keyserver keys.gnupg.net 1FB50E9B838F7C88
+  #else
+   # echo "You already add key"
+#fi
+##The code name of the distribution, and adds to the repository /etc/apt/souces.list
+#if [ 3>&1 dpkg -s python-software-properties software-properties-common>&3 | grep "Status: install ok installed" -eq 0 ]
+ #then
+  #sudo apt-get install python-software-properties software-properties-common
+ #else
+ # echo "You already install python-software-properties and software-properties-common"
+#fi
+#DISTR_CODENAME=$(awk -F "=" '{ print $2 }' /etc/lsb-release | sed -n  '3p')
+#sudo add-apt-repository "deb http://repos.chmsoft.com.ua/ "$DISTR_CODENAME"-evolution non-free"
+PACKAGES_NEW=$(printf '%s' $PACKAGES | tr -d \") 
+if [ "$PACKAGES_NEW"="chameleon-spring" ]
+then
+sudo apt-get install chameleon-client chameleon-spring 
+elif [ "$PACKAGES_NEW"="chameleon-fruti" ]
+then
+sudo apt-get install chameleon-client chameleon-fruti
+elif [ "$PACKAGES_NEW"="chameleon-server" ]
+then
+sudo apt-get install chameleon-server
+fi
+;;
 q) exit ;;
-
 esac
-
 

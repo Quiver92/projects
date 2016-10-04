@@ -1,5 +1,5 @@
 #!/bin/bash
-
+#include <stdio.h>
 # Выведем шапку
 printf "%-15s%-20s%-17s%-29s%-25s\n" "Client" "Hostname" "VPN Address" "Connected Since" "Real Address"
 
