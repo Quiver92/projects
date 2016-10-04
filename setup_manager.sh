@@ -60,23 +60,6 @@ if [ $exitstatus = 0 ]; then
  else
   echo "You choose cancel."
 fi
-##Checking key and adding it
-##APTKEY=$(3>&1 apt-key list>&3 |  awk '{ print $2 }' | grep 1024D/838F7C88)
-##if [ $APTKEY -eq 0 ]
-  ##then
-    ##apt-key adv --recv-keys --keyserver keys.gnupg.net 1FB50E9B838F7C88
-  #else
-   # echo "You already add key"
-#fi
-##The code name of the distribution, and adds to the repository /etc/apt/souces.list
-#if [ 3>&1 dpkg -s python-software-properties software-properties-common>&3 | grep "Status: install ok installed" -eq 0 ]
- #then
-  #sudo apt-get install python-software-properties software-properties-common
- #else
- # echo "You already install python-software-properties and software-properties-common"
-#fi
-#DISTR_CODENAME=$(awk -F "=" '{ print $2 }' /etc/lsb-release | sed -n  '3p')
-#sudo add-apt-repository "deb http://repos.chmsoft.com.ua/ "$DISTR_CODENAME"-evolution non-free"
 PACKAGES_NEW=$(printf '%s' $PACKAGES | tr -d \") 
 if [ "$PACKAGES_NEW"="chameleon-spring" ]
 then
