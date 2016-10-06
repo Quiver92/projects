@@ -1,0 +1,16 @@
+NAME   
+	setup_manager.sh
+DESCRIPTION
+
+	This script you can use to install teamviever or skypr or some part of Chameleon.
+	It has a not difficult menu's with extra explain of parts.
+
+
+You can download it from:
+LINK:: 		https://github.com/Quiver92/projects/tree/master/setup_manager								
+
+
+
+
+
+Lytovka Vlad		4 October 2016                    setup_manager.sh

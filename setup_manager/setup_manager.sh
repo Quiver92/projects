@@ -22,6 +22,7 @@ tput clear
 tput sgr0
 
 case "$answer" in
+
 #Setup teamviewer
 1) sudo rm -rf /mnt/teamviewer* && sudo apt-get install -f && sudo apt-get -y install libxtst6:i386 libxrandr2:i386 && sudo apt-get update && sudo apt-get install -f && cd /mnt/ && sudo wget https://download.teamviewer.com/download/teamviewer_i386.deb && cd /mnt && sudo dpkg -i /mnt/teamviewer* && sudo rm -rf /mnt/teamviever* ;;
 
@@ -29,8 +30,8 @@ case "$answer" in
 2) sudo apt-get install -f && sudo apt-get install sni-qt:i386 libdbusmenu-qt2:i386 libqt4-dbus:i386 libxss1:i386 && sudo apt-get update && sudo apt-get install libgtk2.0-0:i386 gtk2-engines:i386 libgconf-2-4:i386 && sudo apt-get install -f && sudo add-apt-repository "deb http://archive.canonical.com/ $(lsb_release -sc) partner" && sudo apt-get update && sudo apt-get install skype ;;
 
 ##Installation of Chameleon
-
-3) ##Checking key and adding it
+3) whiptail --title "Example Dialog" --msgbox "Now will be installed addiional components. It takes less than a minute. You must hit OK to continue." 8 78
+##Checking key and adding it
  APTKEY=$(3>&1 apt-key list>&3 |  awk '{ print $2 }' | grep 1024D/838F7C88)
  if [ $APTKEY -eq 0 ]
    then
@@ -70,6 +71,8 @@ sudo apt-get install chameleon-client chameleon-fruti
 elif [ "$PACKAGES_NEW"="chameleon-server" ]
 then
 sudo apt-get install chameleon-server
+else 'You chose cancel'
+exit 0
 fi
 ;;
 q) exit ;;
